@@ -13,19 +13,17 @@ class Get
         $value = $objectOrArray;
 
         foreach ($keys as $key) {
-            if (is_array($value)) {
-                if (isset($value[$key])) {
-                    $value = $value[$key];
-                } else {
-                    return $default;
-                }
-            } else {
-                if (isset($value->$key)) {
-                    $value = $value->$key;
-                } else {
-                    return $default;
-                }
+            if (isset($value->$key)) {
+                $value = $value->$key;
+                continue;
             }
+
+            if (is_array($value) && isset($value[$key])) {
+                $value = $value[$key];
+                continue;
+            }
+
+            return $default;
         }
 
         return $value;

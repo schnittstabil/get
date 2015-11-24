@@ -4,15 +4,23 @@ namespace Schnittstabil;
 
 class Get
 {
-    public static function value($keys, $objectOrArray, $default = null)
+    /**
+     * @param string|string[] $path
+     * @param object|array    $objectOrArray
+     * @param \Closure        $outOfBoundsHandler
+     */
+    private static function call($path, $objectOrArray, $outOfBoundsHandler)
     {
-        if (!is_array($keys)) {
-            $keys = [$keys];
+        $trace = [];
+        if (!is_array($path)) {
+            $path = [$path];
         }
 
         $value = $objectOrArray;
 
-        foreach ($keys as $key) {
+        foreach ($path as $key) {
+            $trace[] = $key;
+
             if (isset($value->$key)) {
                 $value = $value->$key;
                 continue;
@@ -23,9 +31,47 @@ class Get
                 continue;
             }
 
-            return $default;
+            return $outOfBoundsHandler($trace);
         }
 
         return $value;
+    }
+
+    /**
+     * Return array values and object properties.
+     *
+     * @param string|int|int[]|string[] $path
+     * @param object|array              $objectOrArray
+     * @param mixed                     $default       Default value if $path is not valid.
+     *
+     * @return mixed The value determined by $path or otherwise $default.
+     */
+    public static function value($path, $objectOrArray, $default = null)
+    {
+        return self::call($path, $objectOrArray, function () use ($default) {
+            return $default;
+        });
+    }
+
+    /**
+     * Return array values and object properties.
+     *
+     * @param string|int|int[]|string[] $path
+     * @param object|array              $objectOrArray
+     * @param mixed                     $message       Exception message.
+     *
+     * @throws \OutOfBoundsException if the $path does not determine a member of $objectOrArray.
+     *
+     * @return mixed The value determined by $path.
+     */
+    public static function valueOrFail($path, $objectOrArray, $message = null)
+    {
+        return self::call($path, $objectOrArray, function ($path) use (&$message) {
+            if ($message === null) {
+                $message = 'Cannot get %s.';
+            }
+
+            throw new \OutOfBoundsException(sprintf($message, json_encode($path)));
+        });
     }
 }

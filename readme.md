@@ -18,12 +18,14 @@ require __DIR__.'/vendor/autoload.php';
 use Schnittstabil\Get;
 
 echo 'Hello '.Get::value('name', $_REQUEST, 'John Doe');
+
+echo 'Hello '.Get::valueOrFail('PHP_AUTH_USER', $_SERVER, 'User is not authenticated.');
 ```
 
 
 ## API
 
-### Schnittstabil\Get::value($keys, $objectOrArray, $default = null)
+### Schnittstabil\Get::value($path, $objectOrArray, $default = null)
 
 Returns array values and object properties:
 
@@ -39,6 +41,18 @@ $array['foo']->bar = true;
 \Schnittstabil\Get::value(['foo', 'bar'], $array)        //=> true
 \Schnittstabil\Get::value(['foo', 'foobar'], $array)     //=> null
 \Schnittstabil\Get::value(['foo', 'foobar'], $array, 42) //=> 42
+```
+
+### Schnittstabil\Get::valueOrFail($path, $objectOrArray, $message = null)
+
+Same as `Schnittstabil\Get::value`, but throws an `OutOfBoundsException`:
+
+```php
+\Schnittstabil\Get::value(3, $array)
+//=> throws an OutOfBoundsException
+
+\Schnittstabil\Get::value(3, $array, 'Error Message')
+//=> throws a new OutOfBoundsException('Error Message')
 ```
 
 

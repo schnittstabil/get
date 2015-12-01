@@ -4,7 +4,7 @@
     "description": "Get nested array values and object properties.",
     "license": "MIT",
     "keywords": ["array", "object", "get", "value", "null", "coalescing", "nested"],
-    "homepage": "https://github.com/schnittstabil/array_get",
+    "homepage": "https://github.com/schnittstabil/get",
     "authors": [
         {
             "name": "Michael Mayer",

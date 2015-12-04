@@ -33,14 +33,21 @@ Returns array values and object properties:
 $array = ['zero', 'one', 'two'];
 $array['foo'] = new \stdClass();
 $array['foo']->bar = true;
+$array['un.usual'] = true;
 
 \Schnittstabil\Get::value(1, $array)     //=> 'one'
 \Schnittstabil\Get::value(3, $array)     //=> null
 \Schnittstabil\Get::value(3, $array, 42) //=> 42
 
+\Schnittstabil\Get::value('foo.bar', $array)         //=> true
+\Schnittstabil\Get::value('foo.foobar', $array)      //=> null
+\Schnittstabil\Get::value('foo.foobar', $array, 42)  //=> 42
+
 \Schnittstabil\Get::value(['foo', 'bar'], $array)        //=> true
 \Schnittstabil\Get::value(['foo', 'foobar'], $array)     //=> null
 \Schnittstabil\Get::value(['foo', 'foobar'], $array, 42) //=> 42
+
+\Schnittstabil\Get::value(['un.usual'], $array), //=> true
 ```
 
 ### Schnittstabil\Get::valueOrFail($path, $objectOrArray, $message = null)

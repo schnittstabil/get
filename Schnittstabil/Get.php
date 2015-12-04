@@ -5,13 +5,17 @@ namespace Schnittstabil;
 class Get
 {
     /**
-     * @param string|string[] $path
-     * @param object|array    $objectOrArray
-     * @param \Closure        $outOfBoundsHandler
+     * @param string|int|mixed[] $path
+     * @param object|array       $objectOrArray
+     * @param \Closure           $outOfBoundsHandler
      */
     private static function call($path, $objectOrArray, $outOfBoundsHandler)
     {
         $trace = [];
+        if (is_string($path)) {
+            $path = explode('.', $path);
+        }
+
         if (!is_array($path)) {
             $path = [$path];
         }
@@ -40,9 +44,9 @@ class Get
     /**
      * Return array values and object properties.
      *
-     * @param string|int|int[]|string[] $path
-     * @param object|array              $objectOrArray
-     * @param mixed                     $default       Default value if $path is not valid.
+     * @param string|int|mixed[] $path
+     * @param object|array       $objectOrArray
+     * @param mixed              $default       Default value if $path is not valid.
      *
      * @return mixed The value determined by $path or otherwise $default.
      */
@@ -56,9 +60,9 @@ class Get
     /**
      * Return array values and object properties.
      *
-     * @param string|int|int[]|string[] $path
-     * @param object|array              $objectOrArray
-     * @param mixed                     $message       Exception message.
+     * @param string|int|mixed[] $path
+     * @param object|array       $objectOrArray
+     * @param mixed              $message       Exception message.
      *
      * @throws \OutOfBoundsException if the $path does not determine a member of $objectOrArray.
      *

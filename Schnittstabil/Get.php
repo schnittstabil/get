@@ -6,23 +6,33 @@ class Get
 {
     /**
      * @param string|int|mixed[] $path
+     *
+     * @return mixed[] The normalized path
+     */
+    private static function normalizePath($path)
+    {
+        if (is_string($path)) {
+            return explode('.', $path);
+        }
+
+        if (!is_array($path)) {
+            return [$path];
+        }
+
+        return $path;
+    }
+
+    /**
+     * @param string|int|mixed[] $path
      * @param object|array       $objectOrArray
      * @param \Closure           $outOfBoundsHandler
      */
     private static function call($path, $objectOrArray, $outOfBoundsHandler)
     {
         $trace = [];
-        if (is_string($path)) {
-            $path = explode('.', $path);
-        }
-
-        if (!is_array($path)) {
-            $path = [$path];
-        }
-
         $value = $objectOrArray;
 
-        foreach ($path as $key) {
+        foreach (self::normalizePath($path) as $key) {
             $trace[] = $key;
 
             if (isset($value->$key)) {

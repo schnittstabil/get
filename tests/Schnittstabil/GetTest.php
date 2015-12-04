@@ -2,6 +2,8 @@
 
 namespace Schnittstabil;
 
+require 'Fixtures/ArrayAccessObject.php';
+
 class GetTest extends \PHPUnit_Framework_TestCase
 {
     use \VladaHejda\AssertException;
@@ -36,6 +38,38 @@ class GetTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Get::value(['foo', 'bar'], $array), 'foobar');
         $this->assertEquals(Get::value(['foo', 'foobar'], $array), null);
         $this->assertEquals(Get::value(['foo', 'foobar'], $array, 42), 42);
+    }
+
+    public function testGetValueShouldReturnArrayAccessValues()
+    {
+        $arrayAccesss = new Fixtures\ArrayAccessObject(['foo', 'bar']);
+        $this->assertEquals(Get::value(1, $arrayAccesss), 'bar');
+        $this->assertEquals(Get::value(2, $arrayAccesss), null);
+        $this->assertEquals(Get::value(2, $arrayAccesss, 42), 42);
+    }
+
+    public function testGetValueShouldReturnNestedArrayAccessValues()
+    {
+        $arrayAccesss = new Fixtures\ArrayAccessObject(['foo', ['bar', 'foobar']]);
+        $this->assertEquals(Get::value([1, 0], $arrayAccesss), 'bar');
+        $this->assertEquals(Get::value([1, 2], $arrayAccesss), null);
+        $this->assertEquals(Get::value([1, 2], $arrayAccesss, 42), 42);
+    }
+
+    public function testGetValueShouldReturnNamedArrayAccessValues()
+    {
+        $arrayAccesss = new Fixtures\ArrayAccessObject(['foo' => 'bar']);
+        $this->assertEquals(Get::value('foo', $arrayAccesss), 'bar');
+        $this->assertEquals(Get::value('bar', $arrayAccesss), null);
+        $this->assertEquals(Get::value('bar', $arrayAccesss, 42), 42);
+    }
+
+    public function testGetValueShouldReturnNestedNamedArrayAccessValues()
+    {
+        $arrayAccesss = new Fixtures\ArrayAccessObject(['foo' => ['bar' => 'foobar']]);
+        $this->assertEquals(Get::value(['foo', 'bar'], $arrayAccesss), 'foobar');
+        $this->assertEquals(Get::value(['foo', 'foobar'], $arrayAccesss), null);
+        $this->assertEquals(Get::value(['foo', 'foobar'], $arrayAccesss, 42), 42);
     }
 
     public function testGetValueShouldReturnObjectProperties()

@@ -45,6 +45,11 @@ class Get
                 continue;
             }
 
+            if ($value instanceof \ArrayAccess && $value->offsetExists($key)) {
+                $value = $value->offsetGet($key);
+                continue;
+            }
+
             return $outOfBoundsHandler($trace);
         }
 

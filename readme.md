@@ -1,4 +1,4 @@
-# Get [![Build Status](https://travis-ci.org/schnittstabil/get.svg?branch=master)](https://travis-ci.org/schnittstabil/get) [![Coverage Status](https://coveralls.io/repos/schnittstabil/get/badge.svg?branch=master&service=github)](https://coveralls.io/github/schnittstabil/get?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/schnittstabil/get/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/schnittstabil/get/?branch=master) [![Code Climate](https://codeclimate.com/github/schnittstabil/get/badges/gpa.svg)](https://codeclimate.com/github/schnittstabil/get)
+# Get [![Build Status](https://travis-ci.org/schnittstabil/get.svg?branch=master)](https://travis-ci.org/schnittstabil/get) [![Coverage Status](https://coveralls.io/repos/schnittstabil/get/badge.svg?branch=master&service=github)](https://coveralls.io/github/schnittstabil/get?branch=master)
 
 > Get nested array values and object properties.
 

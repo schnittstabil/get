@@ -48,10 +48,10 @@ $array['foo']->bar = true;
 Same as `Schnittstabil\Get::value`, but throws an `OutOfBoundsException`:
 
 ```php
-\Schnittstabil\Get::value(3, $array)
+\Schnittstabil\Get::valueOrFail(3, $array)
 //=> throws an OutOfBoundsException
 
-\Schnittstabil\Get::value(3, $array, 'Error Message')
+\Schnittstabil\Get::valueOrFail(3, $array, 'Error Message')
 //=> throws a new OutOfBoundsException('Error Message')
 ```
 

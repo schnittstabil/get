@@ -9,6 +9,7 @@ lint:
 	@tput setaf 2; echo running lint...; tput sgr0
 	@vendor/bin/php-cs-fixer fix --dry-run --diff Schnittstabil
 	@vendor/bin/php-cs-fixer fix --dry-run --diff tests
+	@vendor/bin/php-cs-fixer fix --dry-run --diff *.php
 
 phpunit:
 	@tput setaf 2; echo running phpunit...; tput sgr0

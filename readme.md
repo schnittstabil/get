@@ -1,5 +1,7 @@
 # Get [![Build Status](https://travis-ci.org/schnittstabil/get.svg?branch=master)](https://travis-ci.org/schnittstabil/get) [![Coverage Status](https://coveralls.io/repos/schnittstabil/get/badge.svg?branch=master&service=github)](https://coveralls.io/github/schnittstabil/get?branch=master)
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/c67798be-143a-432d-b11f-49210f437a33/big.png)](https://insight.sensiolabs.com/projects/c67798be-143a-432d-b11f-49210f437a33)
+
 > Get nested array values and object properties.
 
 

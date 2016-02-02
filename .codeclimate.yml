@@ -5,6 +5,12 @@ engines:
     enabled: true
   phpmd:
     enabled: true
+ratings:
+   paths:
+   - "Schnittstabil/**/*"
+   - "**.php"
+   - "**.module"
+   - "**.inc"
 exclude_paths:
 - "tests/**/*"
 - ".codeclimate.yml"

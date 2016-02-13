@@ -2,13 +2,26 @@
 
 namespace Schnittstabil\Fixtures;
 
+/**
+ * Some class implementing \ArrayAccess.
+ */
 class ArrayAccessObject implements \ArrayAccess
 {
-    private $container;
+    /**
+     * The item container.
+     *
+     * @var array
+     */
+    protected $container;
 
-    public function __construct(array $array = null)
+    /**
+     * Create new ArrayAccessObject.
+     *
+     * @param array|null $container prefilled container
+     */
+    public function __construct(array $container = null)
     {
-        $this->container = $array ?: array();
+        $this->container = $container ?: array();
     }
 
     public function offsetSet($offset, $value)

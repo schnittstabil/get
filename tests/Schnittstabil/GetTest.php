@@ -4,6 +4,9 @@ namespace Schnittstabil;
 
 require 'Fixtures/ArrayAccessObject.php';
 
+/**
+ * Get tests.
+ */
 class GetTest extends \PHPUnit_Framework_TestCase
 {
     use \VladaHejda\AssertException;

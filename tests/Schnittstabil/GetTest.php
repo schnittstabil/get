@@ -230,6 +230,12 @@ class GetTest extends \PHPUnit_Framework_TestCase
         }, \OutOfBoundsException::class, null, 'MESSAGE');
     }
 
+    public function testGetNormalizePathShouldBePublic()
+    {
+        $normalizePath = new \ReflectionMethod(Get::class, 'normalizePath');
+        $this->assertTrue($normalizePath->isPublic());
+    }
+
     public function testUsageExample()
     {
         $doe = \Schnittstabil\Get::value('name', $_REQUEST, 'John Doe');

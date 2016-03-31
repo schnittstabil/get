@@ -14,7 +14,7 @@ class Get
      *
      * @return mixed[] the normalized path
      */
-    protected static function normalizePath($path)
+    public static function normalizePath($path)
     {
         if (is_string($path)) {
             return explode('.', $path);

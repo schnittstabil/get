@@ -1,6 +1,6 @@
 <?php
 
-namespace Schnittstabil\Fixtures;
+namespace Schnittstabil\Get\Fixtures;
 
 /**
  * Some class implementing \ArrayAccess.

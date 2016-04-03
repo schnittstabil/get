@@ -12,42 +12,40 @@
         }
     ],
     "autoload": {
-        "psr-4": { "Schnittstabil\\": "Schnittstabil" }
+        "psr-4": {"Schnittstabil\\Get\\": "src"},
+        "files": ["src/functions.php"]
+    },
+    "autoload-dev": {
+        "psr-4": {"Schnittstabil\\Get\\": "tests"}
     },
     "require": {
-        "php": ">=5.6.0"
+        "php": ">=5.6.0",
+        "phpunit/phpunit": "^5.3"
     },
     "require-dev": {
         "codeclimate/php-test-reporter": "^0.2.0",
         "fabpot/php-cs-fixer": "^1.10",
         "halleck45/phpmetrics": "^1.8",
         "phpmd/phpmd": "^2.3",
-        "phpunit/phpunit": "^5.0",
         "sami/sami": "^3.1",
         "satooshi/php-coveralls": "^0.6.1",
         "squizlabs/php_codesniffer": "^2.5",
         "vladahejda/phpunit-assert-exception": "^1.0"
     },
     "scripts": {
-        "clean": "rm -rf build/ coverage/ doc/",
+        "clean": "rm -rf build/",
         "doc": [
             "vendor/bin/sami.php update sami_configuration.php -v",
-            "vendor/bin/phpmetrics --report-html doc/metrics.html Schnittstabil/"
+            "vendor/bin/phpmetrics --report-html build/phpmetrics/metrics.html src/"
         ],
         "lint": [
             "vendor/bin/phpcs -s",
-            "vendor/bin/phpmd Schnittstabil text cleancode,codesize,controversial,design,naming,unusedcode",
-            "vendor/bin/php-cs-fixer fix --dry-run --diff Schnittstabil",
+            "vendor/bin/phpmd src/Get.php text cleancode,codesize,controversial,design,naming,unusedcode",
+            "vendor/bin/php-cs-fixer fix --dry-run --diff src",
             "vendor/bin/php-cs-fixer fix --dry-run --diff tests",
             "vendor/bin/php-cs-fixer fix --dry-run --diff *.php"
         ],
         "phpunit": "vendor/bin/phpunit",
-        "watch": "gazer-color --pattern \"Schnittstabil/**/*\" --pattern \"tests/**/*\" -- composer watch-tasks",
-        "watch-tasks": [
-            "composer phpunit",
-            "composer lint",
-            "composer doc"
-        ],
         "test": [
             "composer phpunit",
             "composer lint"

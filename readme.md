@@ -17,47 +17,51 @@ $ composer require schnittstabil/get
 ```php
 require __DIR__.'/vendor/autoload.php';
 
-use Schnittstabil\Get;
+use function Schnittstabil\Get\getValue;
+use function Schnittstabil\Get\getValueOrFail;
 
-echo 'Hello '.Get::value('name', $_REQUEST, 'John Doe');
-
-echo 'Hello '.Get::valueOrFail('PHP_AUTH_USER', $_SERVER, 'User is not authenticated.');
+echo 'Hello '.getValue('name', $_REQUEST, 'John Doe');
+echo 'Hello '.getValueOrFail('PHP_AUTH_USER', $_SERVER, 'User is not authenticated.');
 ```
 
 
 ## API
 
-### Schnittstabil\Get::value($path, $objectOrArray, $default = null)
+### Schnittstabil\Get\getValue($path, $objectOrArray, $default = null)
 
 Returns array values and object properties:
 
 ```php
+use function Schnittstabil\Get\getValue;
+
 $array = ['zero', 'one', 'two'];
 $array['foo'] = new \stdClass();
 $array['foo']->bar = true;
 $array['un.usual'] = true;
 
-\Schnittstabil\Get::value(1,              $array)  //=> 'one'
-\Schnittstabil\Get::value('1',            $array)  //=> 'one'
-\Schnittstabil\Get::value('foo.bar',      $array)  //=> true
-\Schnittstabil\Get::value(['foo', 'bar'], $array)  //=> true
-\Schnittstabil\Get::value(['un.usual'],   $array)  //=> true
+getValue(1,              $array);  //=> 'one'
+getValue('1',            $array);  //=> 'one'
+getValue('foo.bar',      $array);  //=> true
+getValue(['foo', 'bar'], $array);  //=> true
+getValue(['un.usual'],   $array);  //=> true
 
 // $default
-\Schnittstabil\Get::value('un.usual', $array)      //=> null
-\Schnittstabil\Get::value(3,          $array)      //=> null
-\Schnittstabil\Get::value(3,          $array, 42)  //=> 42
+getValue('un.usual', $array);      //=> null
+getValue(3,          $array);      //=> null
+getValue(3,          $array, 42);  //=> 42
 ```
 
-### Schnittstabil\Get::valueOrFail($path, $objectOrArray, $message = null)
+### Schnittstabil\Get\getValueOrFail($path, $objectOrArray, $message = null)
 
-Same as `Schnittstabil\Get::value`, but throws an `OutOfBoundsException`:
+Same as `Schnittstabil\Get\Get::value`, but throws an `OutOfBoundsException`:
 
 ```php
-\Schnittstabil\Get::valueOrFail(3, $array)
+use function Schnittstabil\Get\getValueOrFail;
+
+getValueOrFail(3, $array);
 //=> throws an OutOfBoundsException
 
-\Schnittstabil\Get::valueOrFail(3, $array, 'Error Message')
+getValueOrFail(3, $array, 'Error Message');
 //=> throws a new OutOfBoundsException('Error Message')
 ```
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Schnittstabil;
+namespace Schnittstabil\Get;
 
 /**
  * Get nested array values and object properties.

@@ -35,19 +35,18 @@
     "scripts": {
         "clean": "rm -rf build/",
         "doc": [
-            "vendor/bin/sami.php update sami_configuration.php -v",
-            "vendor/bin/phpmetrics --report-html build/phpmetrics/metrics.html src/"
+            "sami.php update sami_configuration.php -v",
+            "phpmetrics --report-html build/phpmetrics/metrics.html src/"
         ],
         "lint": [
-            "vendor/bin/phpcs -s",
-            "vendor/bin/phpmd src/Get.php text cleancode,codesize,controversial,design,naming,unusedcode",
-            "vendor/bin/php-cs-fixer fix --dry-run --diff src",
-            "vendor/bin/php-cs-fixer fix --dry-run --diff tests",
-            "vendor/bin/php-cs-fixer fix --dry-run --diff *.php"
+            "phpcs -s --standard=PSR1,PSR2 src/ tests/",
+            "phpmd src/Get.php text cleancode,codesize,controversial,design,naming,unusedcode",
+            "php-cs-fixer fix --dry-run --diff src",
+            "php-cs-fixer fix --dry-run --diff tests",
+            "php-cs-fixer fix --dry-run --diff *.php"
         ],
-        "phpunit": "vendor/bin/phpunit",
         "test": [
-            "composer phpunit",
+            "phpunit",
             "composer lint"
         ]
     }

@@ -254,13 +254,13 @@ class GetTest extends \PHPUnit_Framework_TestCase
         $array['foo']->bar = true;
         $array['un.usual'] = true;
 
-        $this->assertEquals(\Schnittstabil\Get\getValue(1,              $array), 'one');
-        $this->assertEquals(\Schnittstabil\Get\getValue('1',            $array), 'one');
-        $this->assertEquals(\Schnittstabil\Get\getValue('foo.bar',      $array), true);
+        $this->assertEquals(\Schnittstabil\Get\getValue(1, $array), 'one');
+        $this->assertEquals(\Schnittstabil\Get\getValue('1', $array), 'one');
+        $this->assertEquals(\Schnittstabil\Get\getValue('foo.bar', $array), true);
         $this->assertEquals(\Schnittstabil\Get\getValue(['foo', 'bar'], $array), true);
-        $this->assertEquals(\Schnittstabil\Get\getValue(['un.usual'],   $array), true);
-        $this->assertEquals(\Schnittstabil\Get\getValue('un.usual',     $array), null);
-        $this->assertEquals(\Schnittstabil\Get\getValue(3,              $array), null);
-        $this->assertEquals(\Schnittstabil\Get\getValue(3,              $array, 42), 42);
+        $this->assertEquals(\Schnittstabil\Get\getValue(['un.usual'], $array), true);
+        $this->assertEquals(\Schnittstabil\Get\getValue('un.usual', $array), null);
+        $this->assertEquals(\Schnittstabil\Get\getValue(3, $array), null);
+        $this->assertEquals(\Schnittstabil\Get\getValue(3, $array, 42), 42);
     }
 }

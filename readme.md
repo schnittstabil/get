@@ -53,7 +53,7 @@ getValue(3,          $array, 42);  //=> 42
 
 ### Schnittstabil\Get\getValueOrFail($path, $objectOrArray, $message = null)
 
-Same as `Schnittstabil\Get\Get::value`, but throws an `OutOfBoundsException`:
+Same as `Schnittstabil\Get\getValue`, but throws an `OutOfBoundsException`:
 
 ```php
 use function Schnittstabil\Get\getValueOrFail;

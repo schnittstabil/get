@@ -31,6 +31,11 @@
         "squizlabs/php_codesniffer": "^2.5",
         "vladahejda/phpunit-assert-exception": "^1.0"
     },
+    "extra": {
+        "schnittstabil/sugared-phpunit": {
+            "bootstrap": "tests/bootstrap.php"
+        }
+    },
     "scripts": {
         "clean": "rm -rf build/",
         "doc": [

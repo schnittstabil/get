@@ -26,7 +26,6 @@
         "fabpot/php-cs-fixer": "^1.10",
         "halleck45/phpmetrics": "^1.8",
         "phpmd/phpmd": "^2.3",
-        "phpunit/phpunit": "^5.3",
         "sami/sami": "^3.1",
         "satooshi/php-coveralls": "^0.6.1",
         "squizlabs/php_codesniffer": "^2.5",
@@ -46,7 +45,7 @@
             "php-cs-fixer fix --dry-run --diff *.php"
         ],
         "test": [
-            "phpunit",
+            "sugared-phpunit",
             "composer lint"
         ]
     }

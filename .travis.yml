@@ -10,7 +10,7 @@ sudo: false
 install:
   - composer selfupdate
   - composer install
-  - composer global require schnittstabil/sugared-phpunit
+  - composer global require schnittstabil/sugared-phpunit schnittstabil/sugared-sami
   - export PATH=$PATH:`composer global config bin-dir --absolute`
 
 before_script:

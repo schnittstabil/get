@@ -28,9 +28,11 @@ class ArrayAccessObject implements \ArrayAccess
     {
         if ($offset === null) {
             $this->container[] = $value;
-        } else {
-            $this->container[$offset] = $value;
+
+            return;
         }
+
+        $this->container[$offset] = $value;
     }
 
     public function offsetExists($offset)

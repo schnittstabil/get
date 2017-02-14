@@ -2,6 +2,7 @@
 
 namespace Schnittstabil\Get;
 
+use Schnittstabil\Get;
 use Schnittstabil\Get\Fixtures\ArrayAccessObject;
 
 /**
@@ -316,34 +317,60 @@ class GetTest extends \PHPUnit\Framework\TestCase
 
     public function testGetNormalizePathShouldBePublic()
     {
-        $normalizePath = new \ReflectionMethod(Get::class, 'normalizePath');
+        $normalizePath = new \ReflectionMethod(Get\Get::class, 'normalizePath');
         $this->assertTrue($normalizePath->isPublic());
     }
 
     public function testUsageExample()
     {
-        $doe = getValue('name', $_REQUEST, 'John Doe');
+        $doe = Get\value('name', $_REQUEST, 'John Doe');
         $this->assertEquals($doe, 'John Doe');
 
         $_REQUEST['name'] = 'Patrick Star';
-        $patrick = getValue('name', $_REQUEST, 'John Doe');
+        $patrick = Get\value('name', $_REQUEST, 'John Doe');
         $this->assertEquals($patrick, 'Patrick Star');
     }
 
-    public function testApiExample()
+    public function testApiValueExample()
     {
         $array = ['zero', 'one', 'two'];
         $array['foo'] = new \stdClass();
         $array['foo']->bar = true;
         $array['un.usual'] = true;
 
-        $this->assertEquals(getValue(1, $array), 'one');
-        $this->assertEquals(getValue('1', $array), 'one');
-        $this->assertEquals(getValue('foo.bar', $array), true);
-        $this->assertEquals(getValue(['foo', 'bar'], $array), true);
-        $this->assertEquals(getValue(['un.usual'], $array), true);
-        $this->assertEquals(getValue('un.usual', $array), null);
-        $this->assertEquals(getValue(3, $array), null);
-        $this->assertEquals(getValue(3, $array, 42), 42);
+        $this->assertEquals(Get\value(1, $array), 'one');
+        $this->assertEquals(Get\value('1', $array), 'one');
+        $this->assertEquals(Get\value('foo.bar', $array), true);
+        $this->assertEquals(Get\value(['foo', 'bar'], $array), true);
+        $this->assertEquals(Get\value(['un.usual'], $array), true);
+        $this->assertEquals(Get\value('un.usual', $array), null);
+        $this->assertEquals(Get\value(3, $array), null);
+        $this->assertEquals(Get\value(3, $array, 42), 42);
+    }
+
+    public function testApiValueOrFailExample()
+    {
+        $array = ['zero', 'one', 'two'];
+        $array['foo'] = new \stdClass();
+        $array['foo']->bar = true;
+        $array['un.usual'] = true;
+
+        $this->expectException(\OutOfBoundsException::class);
+        Get\valueOrFail(3, $array);
+
+        $this->expectExceptionMessageRegExp('/MESSAGE/');
+    }
+
+    public function testApiValueOrFailExampleWithMessage()
+    {
+        $array = ['zero', 'one', 'two'];
+        $array['foo'] = new \stdClass();
+        $array['foo']->bar = true;
+        $array['un.usual'] = true;
+
+        $this->expectException(\OutOfBoundsException::class);
+        Get\valueOrFail(3, $array, 'Error Message');
+
+        $this->expectExceptionMessageRegExp('/Error Message/');
     }
 }

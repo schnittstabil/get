@@ -20,8 +20,16 @@ if (function_exists('runkit_function_remove')) {
         runkit_function_remove('Schnittstabil\Get\getValue');
     }
 
+    if (function_exists('Schnittstabil\Get\value')) {
+        runkit_function_remove('Schnittstabil\Get\value');
+    }
+
     if (function_exists('Schnittstabil\Get\getValueOrFail')) {
         runkit_function_remove('Schnittstabil\Get\getValueOrFail');
+    }
+
+    if (function_exists('Schnittstabil\Get\valueOrFail')) {
+        runkit_function_remove('Schnittstabil\Get\valueOrFail');
     }
 
     require __DIR__.'/../src/functions.php';

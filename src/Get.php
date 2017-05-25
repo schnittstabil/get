@@ -78,13 +78,9 @@ class Get
      */
     public static function value($path, $target, $default = null)
     {
-        return self::call(
-            $path,
-            $target,
-            function () use ($default) {
-                return $default;
-            }
-        );
+        return self::call($path, $target, function () use ($default) {
+            return $default;
+        });
     }
 
     /**
@@ -100,16 +96,12 @@ class Get
      */
     public static function valueOrFail($path, $target, $message = null)
     {
-        return self::call(
-            $path,
-            $target,
-            function ($path) use (&$message) {
-                if ($message === null) {
-                    $message = 'Cannot get %s.';
-                }
-
-                throw new \OutOfBoundsException(sprintf($message, json_encode($path)));
+        return self::call($path, $target, function ($path) use (&$message) {
+            if ($message === null) {
+                $message = 'Cannot get %s.';
             }
-        );
+
+            throw new \OutOfBoundsException(sprintf($message, json_encode($path)));
+        });
     }
 }

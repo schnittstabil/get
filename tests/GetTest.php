@@ -13,306 +13,307 @@ use Schnittstabil\Get\Fixtures\ArrayAccessObject;
  *
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
+ * @SuppressWarnings(PHPMD.ExcessivePublicCount)
  * @SuppressWarnings(PHPMD.TooManyMethods)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  * @SuppressWarnings(PHPMD.Superglobals)
  */
 class GetTest extends \PHPUnit\Framework\TestCase
 {
-    public function testGetValueShouldReturnArrayValues()
+    public function testValueShouldReturnArrayValues()
     {
         $array = ['foo', 'bar'];
-        $this->assertEquals(getValue(1, $array), 'bar');
-        $this->assertEquals(getValue(2, $array), null);
-        $this->assertEquals(getValue(2, $array, 42), 42);
+        $this->assertEquals(value(1, $array), 'bar');
+        $this->assertEquals(value(2, $array), null);
+        $this->assertEquals(value(2, $array, 42), 42);
     }
 
-    public function testGetValueShouldReturnNestedArrayValues()
+    public function testValueShouldReturnNestedArrayValues()
     {
         $array = ['foo', ['bar', 'foobar']];
-        $this->assertEquals(getValue([1, 0], $array), 'bar');
-        $this->assertEquals(getValue([1, 2], $array), null);
-        $this->assertEquals(getValue([1, 2], $array, 42), 42);
+        $this->assertEquals(value([1, 0], $array), 'bar');
+        $this->assertEquals(value([1, 2], $array), null);
+        $this->assertEquals(value([1, 2], $array, 42), 42);
     }
 
-    public function testGetValueShouldReturnNamedArrayValues()
+    public function testValueShouldReturnNamedArrayValues()
     {
         $array = ['foo' => 'bar'];
-        $this->assertEquals(getValue('foo', $array), 'bar');
-        $this->assertEquals(getValue('bar', $array), null);
-        $this->assertEquals(getValue('bar', $array, 42), 42);
+        $this->assertEquals(value('foo', $array), 'bar');
+        $this->assertEquals(value('bar', $array), null);
+        $this->assertEquals(value('bar', $array, 42), 42);
     }
 
-    public function testGetValueShouldReturnNestedNamedArrayValues()
+    public function testValueShouldReturnNestedNamedArrayValues()
     {
         $array = ['foo' => ['bar' => 'foobar']];
-        $this->assertEquals(getValue(['foo', 'bar'], $array), 'foobar');
-        $this->assertEquals(getValue(['foo', 'foobar'], $array), null);
-        $this->assertEquals(getValue(['foo', 'foobar'], $array, 42), 42);
+        $this->assertEquals(value(['foo', 'bar'], $array), 'foobar');
+        $this->assertEquals(value(['foo', 'foobar'], $array), null);
+        $this->assertEquals(value(['foo', 'foobar'], $array, 42), 42);
     }
 
-    public function testGetValueShouldReturnArrayAccessValues()
+    public function testValueShouldReturnArrayAccessValues()
     {
         $arrayAccesss = new ArrayAccessObject(['foo', 'bar']);
-        $this->assertEquals(getValue(1, $arrayAccesss), 'bar');
-        $this->assertEquals(getValue(2, $arrayAccesss), null);
-        $this->assertEquals(getValue(2, $arrayAccesss, 42), 42);
+        $this->assertEquals(value(1, $arrayAccesss), 'bar');
+        $this->assertEquals(value(2, $arrayAccesss), null);
+        $this->assertEquals(value(2, $arrayAccesss, 42), 42);
     }
 
-    public function testGetValueShouldReturnNestedArrayAccessValues()
+    public function testValueShouldReturnNestedArrayAccessValues()
     {
         $arrayAccesss = new ArrayAccessObject(['foo', ['bar', 'foobar']]);
-        $this->assertEquals(getValue([1, 0], $arrayAccesss), 'bar');
-        $this->assertEquals(getValue([1, 2], $arrayAccesss), null);
-        $this->assertEquals(getValue([1, 2], $arrayAccesss, 42), 42);
+        $this->assertEquals(value([1, 0], $arrayAccesss), 'bar');
+        $this->assertEquals(value([1, 2], $arrayAccesss), null);
+        $this->assertEquals(value([1, 2], $arrayAccesss, 42), 42);
     }
 
-    public function testGetValueShouldReturnNamedArrayAccessValues()
+    public function testValueShouldReturnNamedArrayAccessValues()
     {
         $arrayAccesss = new ArrayAccessObject(['foo' => 'bar']);
-        $this->assertEquals(getValue('foo', $arrayAccesss), 'bar');
-        $this->assertEquals(getValue('bar', $arrayAccesss), null);
-        $this->assertEquals(getValue('bar', $arrayAccesss, 42), 42);
+        $this->assertEquals(value('foo', $arrayAccesss), 'bar');
+        $this->assertEquals(value('bar', $arrayAccesss), null);
+        $this->assertEquals(value('bar', $arrayAccesss, 42), 42);
     }
 
-    public function testGetValueShouldReturnNestedNamedArrayAccessValues()
+    public function testValueShouldReturnNestedNamedArrayAccessValues()
     {
         $arrayAccesss = new ArrayAccessObject(['foo' => ['bar' => 'foobar']]);
-        $this->assertEquals(getValue(['foo', 'bar'], $arrayAccesss), 'foobar');
-        $this->assertEquals(getValue(['foo', 'foobar'], $arrayAccesss), null);
-        $this->assertEquals(getValue(['foo', 'foobar'], $arrayAccesss, 42), 42);
+        $this->assertEquals(value(['foo', 'bar'], $arrayAccesss), 'foobar');
+        $this->assertEquals(value(['foo', 'foobar'], $arrayAccesss), null);
+        $this->assertEquals(value(['foo', 'foobar'], $arrayAccesss, 42), 42);
     }
 
-    public function testGetValueShouldReturnObjectProperties()
+    public function testValueShouldReturnObjectProperties()
     {
         $object = new \stdClass();
         $object->foo = 'bar';
-        $this->assertEquals(getValue('foo', $object), 'bar');
-        $this->assertEquals(getValue('bar', $object), null);
-        $this->assertEquals(getValue('bar', $object, 42), 42);
+        $this->assertEquals(value('foo', $object), 'bar');
+        $this->assertEquals(value('bar', $object), null);
+        $this->assertEquals(value('bar', $object, 42), 42);
     }
 
-    public function testGetValueShouldReturnNestedObjectProperties()
+    public function testValueShouldReturnNestedObjectProperties()
     {
         $object = new \stdClass();
         $object->foo = new \stdClass();
         $object->foo->bar = 'foobar';
-        $this->assertEquals(getValue(['foo', 'bar'], $object), 'foobar');
-        $this->assertEquals(getValue(['foo', 'foobar'], $object), null);
-        $this->assertEquals(getValue(['foo', 'foobar'], $object, 42), 42);
+        $this->assertEquals(value(['foo', 'bar'], $object), 'foobar');
+        $this->assertEquals(value(['foo', 'foobar'], $object), null);
+        $this->assertEquals(value(['foo', 'foobar'], $object, 42), 42);
     }
 
-    public function testGetValueShouldReturnMixedValues()
+    public function testValueShouldReturnMixedValues()
     {
         $object = new \stdClass();
         $object->foo = ['bar' => 'foobar'];
-        $this->assertEquals(getValue(['foo', 'bar'], $object), 'foobar');
-        $this->assertEquals(getValue(['foo', 'foobar'], $object), null);
-        $this->assertEquals(getValue(['foo', 'foobar'], $object, 42), 42);
+        $this->assertEquals(value(['foo', 'bar'], $object), 'foobar');
+        $this->assertEquals(value(['foo', 'foobar'], $object), null);
+        $this->assertEquals(value(['foo', 'foobar'], $object, 42), 42);
 
         $array = ['foo' => new \stdClass()];
         $array['foo']->bar = 'foobar';
-        $this->assertEquals(getValue(['foo', 'bar'], $array), 'foobar');
-        $this->assertEquals(getValue(['foo', 'foobar'], $array), null);
-        $this->assertEquals(getValue(['foo', 'foobar'], $array, 42), 42);
+        $this->assertEquals(value(['foo', 'bar'], $array), 'foobar');
+        $this->assertEquals(value(['foo', 'foobar'], $array), null);
+        $this->assertEquals(value(['foo', 'foobar'], $array, 42), 42);
     }
 
-    public function testGetValueShouldWorkWithNull()
+    public function testValueShouldWorkWithNull()
     {
-        $this->assertEquals(getValue('foo', null), null);
-        $this->assertEquals(getValue('foo', null, 42), 42);
-        $this->assertEquals(getValue(['foo', 'bar'], null), null);
-        $this->assertEquals(getValue(['foo', 'bar'], null, 42), 42);
+        $this->assertEquals(value('foo', null), null);
+        $this->assertEquals(value('foo', null, 42), 42);
+        $this->assertEquals(value(['foo', 'bar'], null), null);
+        $this->assertEquals(value(['foo', 'bar'], null, 42), 42);
     }
 
-    public function testGetValueOrFailWithArrayShouldReturn()
+    public function testValueOrFailWithArrayShouldReturn()
     {
-        $this->assertEquals(getValueOrFail(1, ['foo', 'bar']), 'bar');
+        $this->assertEquals(valueOrFail(1, ['foo', 'bar']), 'bar');
     }
 
-    public function testGetValueOrFailWithArrayShouldThrowOutOfBoundsException()
-    {
-        $this->expectException(\OutOfBoundsException::class);
-        getValueOrFail(2, ['foo', 'bar']);
-    }
-
-    public function testGetValueOrFailWithArrayShouldThrowOutOfBoundsExceptionWithMessage()
+    public function testValueOrFailWithArrayShouldThrowOutOfBoundsException()
     {
         $this->expectException(\OutOfBoundsException::class);
-        $this->expectExceptionMessageRegExp('/MESSAGE/');
-        getValueOrFail(2, ['foo', 'bar'], 'MESSAGE');
+        valueOrFail(2, ['foo', 'bar']);
     }
 
-    public function testGetValueOrFailWithNestedArrayValueShouldReturn()
-    {
-        $this->assertEquals(getValueOrFail([1, 0], ['foo', ['bar', 'foobar']]), 'bar');
-    }
-
-    public function testGetValueOrFailWithNestedArrayValueShouldThrowOutOfBoundsException()
-    {
-        $this->expectException(\OutOfBoundsException::class);
-        getValueOrFail([1, 2], ['foo', ['bar', 'foobar']]);
-    }
-
-    public function testGetValueOrFailWithNestedArrayValueShouldThrowOutOfBoundsExceptionWithMessage()
+    public function testValueOrFailWithArrayShouldThrowOutOfBoundsExceptionWithMessage()
     {
         $this->expectException(\OutOfBoundsException::class);
         $this->expectExceptionMessageRegExp('/MESSAGE/');
-        getValueOrFail([1, 2], ['foo', ['bar', 'foobar']], 'MESSAGE');
+        valueOrFail(2, ['foo', 'bar'], 'MESSAGE');
     }
 
-    public function testGetValueOrFailWithNamedArrayValuesShouldReturn()
+    public function testValueOrFailWithNestedArrayValueShouldReturn()
     {
-        $this->assertEquals(getValueOrFail('foo', ['foo' => 'bar']), 'bar');
+        $this->assertEquals(valueOrFail([1, 0], ['foo', ['bar', 'foobar']]), 'bar');
     }
 
-    public function testGetValueOrFailWithNamedArrayValuesShouldThrowOutOfBoundsException()
-    {
-        $this->expectException(\OutOfBoundsException::class);
-        getValueOrFail('bar', ['foo' => 'bar']);
-    }
-
-    public function testGetValueOrFailWithNamedArrayValuesShouldThrowOutOfBoundsExceptionWithMessage()
+    public function testValueOrFailWithNestedArrayValueShouldThrowOutOfBoundsException()
     {
         $this->expectException(\OutOfBoundsException::class);
-        $this->expectExceptionMessageRegExp('/MESSAGE/');
-        getValueOrFail('bar', ['foo' => 'bar'], 'MESSAGE');
+        valueOrFail([1, 2], ['foo', ['bar', 'foobar']]);
     }
 
-    public function testGetValueOrFailWithNestedNamedArrayValuesShouldReturn()
-    {
-        $this->assertEquals(getValueOrFail(['foo', 'bar'], ['foo' => ['bar' => 'foobar']]), 'foobar');
-    }
-
-    public function testGetValueOrFailWithNestedNamedArrayValuesShouldThrowOutOfBoundsException()
-    {
-        $this->expectException(\OutOfBoundsException::class);
-        getValueOrFail(['foo', 'foobar'], ['foo' => ['bar' => 'foobar']]);
-    }
-
-    public function testGetValueOrFailWithNestedNamedArrayValuesShouldThrowOutOfBoundsExceptionWithMessage()
+    public function testValueOrFailWithNestedArrayValueShouldThrowOutOfBoundsExceptionWithMessage()
     {
         $this->expectException(\OutOfBoundsException::class);
         $this->expectExceptionMessageRegExp('/MESSAGE/');
-        getValueOrFail(['foo', 'foobar'], ['foo' => ['bar' => 'foobar']], 'MESSAGE');
+        valueOrFail([1, 2], ['foo', ['bar', 'foobar']], 'MESSAGE');
     }
 
-    public function testGetValueOrFailWithObjectPropertiesShouldThrowOutOfBoundsException()
+    public function testValueOrFailWithNamedArrayValuesShouldReturn()
     {
-        $object = new \stdClass();
-        $object->foo = 'bar';
-        $this->expectException(\OutOfBoundsException::class);
-        getValueOrFail('bar', $object);
+        $this->assertEquals(valueOrFail('foo', ['foo' => 'bar']), 'bar');
     }
 
-    public function testGetValueOrFailWithObjectPropertiesShouldThrowOutOfBoundsExceptionWithMessage()
+    public function testValueOrFailWithNamedArrayValuesShouldThrowOutOfBoundsException()
+    {
+        $this->expectException(\OutOfBoundsException::class);
+        valueOrFail('bar', ['foo' => 'bar']);
+    }
+
+    public function testValueOrFailWithNamedArrayValuesShouldThrowOutOfBoundsExceptionWithMessage()
+    {
+        $this->expectException(\OutOfBoundsException::class);
+        $this->expectExceptionMessageRegExp('/MESSAGE/');
+        valueOrFail('bar', ['foo' => 'bar'], 'MESSAGE');
+    }
+
+    public function testValueOrFailWithNestedNamedArrayValuesShouldReturn()
+    {
+        $this->assertEquals(valueOrFail(['foo', 'bar'], ['foo' => ['bar' => 'foobar']]), 'foobar');
+    }
+
+    public function testValueOrFailWithNestedNamedArrayValuesShouldThrowOutOfBoundsException()
+    {
+        $this->expectException(\OutOfBoundsException::class);
+        valueOrFail(['foo', 'foobar'], ['foo' => ['bar' => 'foobar']]);
+    }
+
+    public function testValueOrFailWithNestedNamedArrayValuesShouldThrowOutOfBoundsExceptionWithMessage()
+    {
+        $this->expectException(\OutOfBoundsException::class);
+        $this->expectExceptionMessageRegExp('/MESSAGE/');
+        valueOrFail(['foo', 'foobar'], ['foo' => ['bar' => 'foobar']], 'MESSAGE');
+    }
+
+    public function testValueOrFailWithObjectPropertiesShouldThrowOutOfBoundsException()
     {
         $object = new \stdClass();
         $object->foo = 'bar';
         $this->expectException(\OutOfBoundsException::class);
-        $this->expectExceptionMessageRegExp('/MESSAGE/');
-        getValueOrFail('bar', $object, 'MESSAGE');
+        valueOrFail('bar', $object);
     }
 
-    public function testGetValueOrFailWithNestedObjectPropertiesShouldReturn()
+    public function testValueOrFailWithObjectPropertiesShouldThrowOutOfBoundsExceptionWithMessage()
+    {
+        $object = new \stdClass();
+        $object->foo = 'bar';
+        $this->expectException(\OutOfBoundsException::class);
+        $this->expectExceptionMessageRegExp('/MESSAGE/');
+        valueOrFail('bar', $object, 'MESSAGE');
+    }
+
+    public function testValueOrFailWithNestedObjectPropertiesShouldReturn()
     {
         $object = new \stdClass();
         $object->foo = new \stdClass();
         $object->foo->bar = 'foobar';
-        $this->assertEquals(getValueOrFail(['foo', 'bar'], $object), 'foobar');
+        $this->assertEquals(valueOrFail(['foo', 'bar'], $object), 'foobar');
     }
 
-    public function testGetValueOrFailWithNestedObjectPropertiesShouldThrowOutOfBoundsException()
+    public function testValueOrFailWithNestedObjectPropertiesShouldThrowOutOfBoundsException()
     {
         $object = new \stdClass();
         $object->foo = new \stdClass();
         $object->foo->bar = 'foobar';
         $this->expectException(\OutOfBoundsException::class);
-        getValueOrFail(['foo', 'foobar'], $object);
+        valueOrFail(['foo', 'foobar'], $object);
     }
 
-    public function testGetValueOrFailWithNestedObjectPropertiesShouldThrowOutOfBoundsExceptionWithMessage()
+    public function testValueOrFailWithNestedObjectPropertiesShouldThrowOutOfBoundsExceptionWithMessage()
     {
         $object = new \stdClass();
         $object->foo = new \stdClass();
         $object->foo->bar = 'foobar';
         $this->expectException(\OutOfBoundsException::class);
         $this->expectExceptionMessageRegExp('/MESSAGE/');
-        getValueOrFail(['foo', 'foobar'], $object, 'MESSAGE');
+        valueOrFail(['foo', 'foobar'], $object, 'MESSAGE');
     }
 
-    public function testGetValueOrFailWithOAMixedValuesShouldReturn()
+    public function testValueOrFailWithOAMixedValuesShouldReturn()
     {
         $object = new \stdClass();
         $object->foo = ['bar' => 'foobar'];
-        $this->assertEquals(getValueOrFail(['foo', 'bar'], $object), 'foobar');
+        $this->assertEquals(valueOrFail(['foo', 'bar'], $object), 'foobar');
     }
 
-    public function testGetValueOrFailWithOAMixedValuesShouldThrowOutOfBoundsException()
-    {
-        $object = new \stdClass();
-        $object->foo = ['bar' => 'foobar'];
-        $this->expectException(\OutOfBoundsException::class);
-        getValueOrFail(['foo', 'foobar'], $object);
-    }
-
-    public function testGetValueOrFailWithOAMixedValuesShouldThrowOutOfBoundsExceptionWithMessage()
+    public function testValueOrFailWithOAMixedValuesShouldThrowOutOfBoundsException()
     {
         $object = new \stdClass();
         $object->foo = ['bar' => 'foobar'];
         $this->expectException(\OutOfBoundsException::class);
-        $this->expectExceptionMessageRegExp('/MESSAGE/');
-        getValueOrFail(['foo', 'foobar'], $object, 'MESSAGE');
+        valueOrFail(['foo', 'foobar'], $object);
     }
 
-    public function testGetValueOrFailWithAOMixedValuesShouldReturn()
+    public function testValueOrFailWithOAMixedValuesShouldThrowOutOfBoundsExceptionWithMessage()
+    {
+        $object = new \stdClass();
+        $object->foo = ['bar' => 'foobar'];
+        $this->expectException(\OutOfBoundsException::class);
+        $this->expectExceptionMessageRegExp('/MESSAGE/');
+        valueOrFail(['foo', 'foobar'], $object, 'MESSAGE');
+    }
+
+    public function testValueOrFailWithAOMixedValuesShouldReturn()
     {
         $array = ['foo' => new \stdClass()];
         $array['foo']->bar = 'foobar';
-        $this->assertEquals(getValueOrFail(['foo', 'bar'], $array), 'foobar');
+        $this->assertEquals(valueOrFail(['foo', 'bar'], $array), 'foobar');
     }
 
-    public function testGetValueOrFailWithAOMixedValuesShouldThrowOutOfBoundsException()
+    public function testValueOrFailWithAOMixedValuesShouldThrowOutOfBoundsException()
     {
         $array = ['foo' => new \stdClass()];
         $array['foo']->bar = 'foobar';
         $this->expectException(\OutOfBoundsException::class);
-        getValueOrFail(['foo', 'foobar'], $array);
+        valueOrFail(['foo', 'foobar'], $array);
     }
 
-    public function testGetValueOrFailWithAOMixedValuesShouldThrowOutOfBoundsExceptionWithMessage()
+    public function testValueOrFailWithAOMixedValuesShouldThrowOutOfBoundsExceptionWithMessage()
     {
         $array = ['foo' => new \stdClass()];
         $array['foo']->bar = 'foobar';
         $this->expectException(\OutOfBoundsException::class);
         $this->expectExceptionMessageRegExp('/MESSAGE/');
-        getValueOrFail(['foo', 'foobar'], $array, 'MESSAGE');
+        valueOrFail(['foo', 'foobar'], $array, 'MESSAGE');
     }
 
-    public function testGetValueOrFailWithNullTargetShouldThrowOutOfBoundsException()
+    public function testValueOrFailWithNullTargetShouldThrowOutOfBoundsException()
     {
         $this->expectException(\OutOfBoundsException::class);
-        getValueOrFail('foo', null);
+        valueOrFail('foo', null);
     }
 
-    public function testGetValueOrFailWithNullTargetShouldThrowOutOfBoundsExceptionWithMessage()
-    {
-        $this->expectException(\OutOfBoundsException::class);
-        $this->expectExceptionMessageRegExp('/MESSAGE/');
-        getValueOrFail('foo', null, 'MESSAGE');
-    }
-
-    public function testGetValueOrFailWithArrayAndNullTargetShouldThrowOutOfBoundsException()
-    {
-        $this->expectException(\OutOfBoundsException::class);
-        getValueOrFail(['foo', 'bar'], null);
-    }
-
-    public function testGetValueOrFailWithArrayAndNullTargetShouldThrowOutOfBoundsExceptionWithMessage()
+    public function testValueOrFailWithNullTargetShouldThrowOutOfBoundsExceptionWithMessage()
     {
         $this->expectException(\OutOfBoundsException::class);
         $this->expectExceptionMessageRegExp('/MESSAGE/');
-        getValueOrFail(['foo', 'bar'], null, 'MESSAGE');
+        valueOrFail('foo', null, 'MESSAGE');
+    }
+
+    public function testValueOrFailWithArrayAndNullTargetShouldThrowOutOfBoundsException()
+    {
+        $this->expectException(\OutOfBoundsException::class);
+        valueOrFail(['foo', 'bar'], null);
+    }
+
+    public function testValueOrFailWithArrayAndNullTargetShouldThrowOutOfBoundsExceptionWithMessage()
+    {
+        $this->expectException(\OutOfBoundsException::class);
+        $this->expectExceptionMessageRegExp('/MESSAGE/');
+        valueOrFail(['foo', 'bar'], null, 'MESSAGE');
     }
 
     public function testGetNormalizePathShouldBePublic()
@@ -370,5 +371,27 @@ class GetTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\OutOfBoundsException::class);
         $this->expectExceptionMessageRegExp('/Error Message/');
         Get\valueOrFail(3, $array, 'Error Message');
+    }
+
+    public function testGetValueShouldBeSupported()
+    {
+        $this->assertEquals(getValue(1, ['foo', 'bar']), 'bar');
+    }
+
+    public function testGetValueShouldBeDeprecated()
+    {
+        $getValue = new \ReflectionFunction('Schnittstabil\Get\getValue');
+        $this->assertRegExp('/^[\s]*\* @deprecated /m', $getValue->getDocComment());
+    }
+
+    public function testGetValueOrFailShouldBeSupported()
+    {
+        $this->assertEquals(getValueOrFail(1, ['foo', 'bar']), 'bar');
+    }
+
+    public function testGetValueOrFailShouldBeDeprecated()
+    {
+        $getValueOrFail = new \ReflectionFunction('Schnittstabil\Get\getValueOrFail');
+        $this->assertRegExp('/^[\s]*\* @deprecated /m', $getValueOrFail->getDocComment());
     }
 }

@@ -356,9 +356,8 @@ class GetTest extends \PHPUnit\Framework\TestCase
         $array['un.usual'] = true;
 
         $this->expectException(\OutOfBoundsException::class);
+        $this->expectExceptionMessageRegExp('/3/');
         Get\valueOrFail(3, $array);
-
-        $this->expectExceptionMessageRegExp('/MESSAGE/');
     }
 
     public function testApiValueOrFailExampleWithMessage()
@@ -369,8 +368,7 @@ class GetTest extends \PHPUnit\Framework\TestCase
         $array['un.usual'] = true;
 
         $this->expectException(\OutOfBoundsException::class);
-        Get\valueOrFail(3, $array, 'Error Message');
-
         $this->expectExceptionMessageRegExp('/Error Message/');
+        Get\valueOrFail(3, $array, 'Error Message');
     }
 }

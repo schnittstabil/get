@@ -13,6 +13,7 @@ use Schnittstabil\Get\Fixtures\ArrayAccessObject;
  *
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  * @SuppressWarnings(PHPMD.ExcessivePublicCount)
  * @SuppressWarnings(PHPMD.TooManyMethods)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
@@ -124,6 +125,45 @@ class GetTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(value('foo', null, 42), 42);
         $this->assertEquals(value(['foo', 'bar'], null), null);
         $this->assertEquals(value(['foo', 'bar'], null, 42), 42);
+    }
+
+
+    public function testValueShouldReturnArrayNullValues()
+    {
+        $array = ['foo' => null];
+        $this->assertEquals(value('foo', $array, 'FAIL'), null);
+    }
+
+    public function testValueOrFailShouldReturnArrayNullValues()
+    {
+        $array = ['foo' => null];
+        $this->assertEquals(valueOrFail('foo', $array, 'FAIL'), null);
+    }
+
+    public function testValueShouldReturnArrayAccessNullValues()
+    {
+        $arrayAccesss = new ArrayAccessObject(['foo' => null]);
+        $this->assertEquals(value('foo', $arrayAccesss, 'FAIL'), null);
+    }
+
+    public function testValueOrFailShouldReturnArrayAccessNullValues()
+    {
+        $arrayAccesss = new ArrayAccessObject(['foo' => null]);
+        $this->assertEquals(valueOrFail('foo', $arrayAccesss, 'FAIL'), null);
+    }
+
+    public function testValueShouldReturnObjectNullProperties()
+    {
+        $object = new \stdClass();
+        $object->foo = null;
+        $this->assertEquals(value('foo', $object, 'FAIL'), null);
+    }
+
+    public function testValueOrFailShouldReturnObjectNullProperties()
+    {
+        $object = new \stdClass();
+        $object->foo = null;
+        $this->assertEquals(valueOrFail('foo', $object, 'FAIL'), null);
     }
 
     public function testValueOrFailWithArrayShouldReturn()

@@ -46,12 +46,12 @@ class Get
         foreach (self::normalizePath($path) as $key) {
             $trace[] = $key;
 
-            if (isset($value->$key)) {
+            if (is_object($value) && property_exists($value, $key)) {
                 $value = $value->$key;
                 continue;
             }
 
-            if (is_array($value) && isset($value[$key])) {
+            if (is_array($value) && array_key_exists($key, $value)) {
                 $value = $value[$key];
                 continue;
             }

@@ -17,11 +17,11 @@ class ArrayAccessObject implements \ArrayAccess
     /**
      * Create new ArrayAccessObject.
      *
-     * @param array|null $container prefilled container
+     * @param array $container prefilled container
      */
-    public function __construct(array $container = null)
+    public function __construct(array $container = array())
     {
-        $this->container = $container ?: array();
+        $this->container = $container;
     }
 
     public function offsetSet($offset, $value)
@@ -37,12 +37,12 @@ class ArrayAccessObject implements \ArrayAccess
 
     public function offsetExists($offset)
     {
-        return isset($this->container[$offset]);
+        return array_key_exists($offset, $this->container);
     }
 
     public function offsetGet($offset)
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->offsetExists($offset) ? $this->container[$offset] : null;
     }
 
     public function offsetUnset($offset)

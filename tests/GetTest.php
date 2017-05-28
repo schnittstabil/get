@@ -398,6 +398,7 @@ class GetTest extends \PHPUnit\Framework\TestCase
 
         $this->expectException(\OutOfBoundsException::class);
         $this->expectExceptionMessageRegExp('/3/');
+        $this->expectExceptionMessageRegExp('/un\.usual/');
         Get\valueOrFail(3, $array);
     }
 
@@ -411,6 +412,21 @@ class GetTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\OutOfBoundsException::class);
         $this->expectExceptionMessageRegExp('/Error Message/');
         Get\valueOrFail(3, $array, 'Error Message');
+    }
+
+    public function testApiValueOrFailShouldReturnGetException()
+    {
+        try {
+            Get\valueOrFail(3, null);
+        } catch (Exception $e) {
+            $this->assertInstanceOf(\Schnittstabil\Get\Exception::class, $e);
+            $this->assertInstanceOf(\Schnittstabil\Get\OutOfBoundsException::class, $e);
+            $this->assertInstanceOf(\OutOfBoundsException::class, $e);
+            $this->assertSame($e->getPath(), [3]);
+            $this->assertSame($e->getTarget(), null);
+            return;
+        }
+        $this->fail();
     }
 
     public function testGetValueShouldBeSupported()

@@ -34,7 +34,7 @@ class Get
      * @param object|array|null  $target             the target
      * @param callable           $outOfBoundsHandler an error handler
      *
-     * @throws \OutOfBoundsException `$outOfBoundsHandler` exceptions
+     * @throws OutOfBoundsException `$outOfBoundsHandler` exceptions
      *
      * @return mixed the value determined by `$path`
      */
@@ -61,7 +61,7 @@ class Get
                 continue;
             }
 
-            return $outOfBoundsHandler($trace);
+            return $outOfBoundsHandler($trace, $target);
         }
 
         return $value;
@@ -90,18 +90,16 @@ class Get
      * @param object|array|null  $target  the target
      * @param mixed              $message exception message
      *
-     * @throws \OutOfBoundsException if the `$path` does not determine a member of `$target`
+     * @throws OutOfBoundsException if the `$path` does not determine a member of `$target`
      *
      * @return mixed the value determined by `$path`
+     *
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public static function valueOrFail($path, $target, $message = null)
     {
-        return self::call($path, $target, function ($path) use (&$message) {
-            if ($message === null) {
-                $message = 'Cannot get %s.';
-            }
-
-            throw new \OutOfBoundsException(sprintf($message, json_encode($path)));
+        return self::call($path, $target, function ($path, $target) use (&$message) {
+            throw OutOfBoundsException::create($path, $target, $message);
         });
     }
 }

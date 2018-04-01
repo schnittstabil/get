@@ -6,11 +6,6 @@ use Schnittstabil\Get;
 use Schnittstabil\Get\Fixtures\ArrayAccessObject;
 
 /**
- * schnittstabil/sugared-phpunit depends on schnittstabil/get,
- * thus we need to run tests in seperate processes with new global state
- * to gather code coverage informations of this schnittstabil/get library,
- * and not the (global) schnittstabil/sugared-phpunit one.
- *
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)

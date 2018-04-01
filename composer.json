@@ -19,10 +19,10 @@
         "psr-4": {"Schnittstabil\\Get\\": "tests"}
     },
     "require": {
-        "php": ">=5.6.0"
+        "php": ">=7.1.0"
     },
     "require-dev": {
-        "schnittstabil/phpunit-starter": "^6.0"
+        "schnittstabil/phpunit-starter": "^6.0 || ^7.0"
     },
     "extra": {
         "schnittstabil/sugared-phpunit": {
@@ -36,7 +36,9 @@
             "phpmetrics --report-html build/phpmetrics/index.html src/"
         ],
         "lint": [
-            "sugared-rim-cs"
+            "sugared-rim-phpcs",
+            "sugared-rim-php-cs-fixer",
+            "sugared-rim-phpmd"
         ],
         "test": [
             "schnittstabil-phpunit-starter",

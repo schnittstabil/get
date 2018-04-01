@@ -37,13 +37,15 @@ class Get
      * @throws OutOfBoundsException `$outOfBoundsHandler` exceptions
      *
      * @return mixed the value determined by `$path`
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     protected static function call($path, $target, callable $outOfBoundsHandler)
     {
         $trace = [];
         $value = $target;
 
-        foreach (self::normalizePath($path) as $key) {
+        foreach (static::normalizePath($path) as $key) {
             $trace[] = $key;
 
             if (is_object($value) && property_exists($value, $key)) {
@@ -78,7 +80,7 @@ class Get
      */
     public static function value($path, $target, $default = null)
     {
-        return self::call($path, $target, function () use ($default) {
+        return static::call($path, $target, function () use ($default) {
             return $default;
         });
     }
@@ -98,7 +100,7 @@ class Get
      */
     public static function valueOrFail($path, $target, $message = null)
     {
-        return self::call($path, $target, function ($path, $target) use (&$message) {
+        return static::call($path, $target, function ($path, $target) use (&$message) {
             throw OutOfBoundsException::create($path, $target, $message);
         });
     }

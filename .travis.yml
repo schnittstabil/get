@@ -2,10 +2,9 @@ language: php
 
 matrix:
   include:
-    - php: 5.6
-      env: QA=yes
-    - php: 7
     - php: 7.1
+    - php: 7.2
+      env: QA=yes
     - php: hhvm
     - php: nightly
   allow_failures:
@@ -14,20 +13,15 @@ matrix:
 
 install:
   - composer selfupdate
-  - composer install
-  - if [ "$QA" == "yes" ]; then composer global require --update-no-dev codeclimate/php-test-reporter:dev-master satooshi/php-coveralls; fi
-  - export PATH=$PATH:`composer global config bin-dir --absolute`
-
-before_script:
-  - if [ "$QA" == "yes" ]; then pecl install runkit; fi
+  - |
+    if [ "$QA" == "yes" ]; then
+      composer require 'satooshi/php-coveralls:*'
+    else
+      composer install
+    fi
 
 script:
   - composer travis
 
 after_success:
-  - if [ "$QA" == "yes" ]; then coveralls -v; fi
-  - if [ "$QA" == "yes" ]; then test-reporter; fi
-
-addons:
-  code_climate:
-    repo_token: a8c2d28a3fe610d1e04dc84858902b7212af113a693666ec444f1433b81efa86
+  - if [ "$QA" == "yes" ]; then travis_retry php vendor/bin/php-coveralls -v; fi

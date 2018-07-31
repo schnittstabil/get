@@ -19,8 +19,8 @@ class EnvTest extends \PHPUnit\Framework\TestCase
     public function testEnvShouldReturnNonTypedDefaultValues()
     {
         putenv('baz');
-        $this->assertSame(env('baz'), null);
-        $this->assertSame(env('baz', null), null);
+        $this->assertNull(env('baz'));
+        $this->assertNull(env('baz', null));
         $this->assertSame(env('baz', 42), 42);
         $this->assertSame(env('baz', '42'), '42');
 

@@ -48,6 +48,17 @@ class Get
         foreach (static::normalizePath($path) as $key) {
             $trace[] = $key;
 
+            $getter = 'get'.ucfirst($key);
+            if (is_object($value) && method_exists($value, $getter)) {
+                $value = $value->$getter();
+                continue;
+            }
+
+            if (is_object($value) && method_exists($value, $key)) {
+                $value = $value->$key();
+                continue;
+            }
+
             if (is_object($value) && property_exists($value, $key)) {
                 $value = $value->$key;
                 continue;

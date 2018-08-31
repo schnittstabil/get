@@ -4,6 +4,8 @@ namespace Schnittstabil\Get;
 
 use Schnittstabil\Get;
 use Schnittstabil\Get\Fixtures\ArrayAccessObject;
+use Schnittstabil\Get\Fixtures\GetterObject;
+use Schnittstabil\Get\Fixtures\MethodObject;
 
 /**
  * @runTestsInSeparateProcesses
@@ -97,6 +99,38 @@ class GetTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(value(['foo', 'bar'], $object), 'foobar');
         $this->assertEquals(value(['foo', 'foobar'], $object), null);
         $this->assertEquals(value(['foo', 'foobar'], $object, 42), 42);
+    }
+
+    public function testValueShouldReturnObjectGetters()
+    {
+        $object = new GetterObject('bar');
+        $this->assertEquals(value('value', $object), 'bar');
+        $this->assertEquals(value('bar', $object), null);
+        $this->assertEquals(value('bar', $object, 42), 42);
+    }
+
+    public function testValueShouldReturnNestedObjectGetters()
+    {
+        $object = new GetterObject(new GetterObject('foobar'));
+        $this->assertEquals(value(['value', 'value'], $object), 'foobar');
+        $this->assertEquals(value(['value', 'foobar'], $object), null);
+        $this->assertEquals(value(['value', 'foobar'], $object, 42), 42);
+    }
+
+    public function testValueShouldReturnObjectMethods()
+    {
+        $object = new MethodObject('bar');
+        $this->assertEquals(value('value', $object), 'bar');
+        $this->assertEquals(value('bar', $object), null);
+        $this->assertEquals(value('bar', $object, 42), 42);
+    }
+
+    public function testValueShouldReturnNestedObjectMethods()
+    {
+        $object = new MethodObject(new MethodObject('foobar'));
+        $this->assertEquals(value(['value', 'value'], $object), 'foobar');
+        $this->assertEquals(value(['value', 'foobar'], $object), null);
+        $this->assertEquals(value(['value', 'foobar'], $object, 42), 42);
     }
 
     public function testValueShouldReturnMixedValues()
